@@ -101,9 +101,3 @@ public extension [EmptyClosure] {
     forEach { $0() }
   }
 }
-
-// TODO: Move this to Emptyable
-
-private extension String {
-  static var empty: String { "" }
-}
