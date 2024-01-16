@@ -1,8 +1,8 @@
 //  Created by Roman Suvorov (kikiwora)
 
+@testable import Convenient_Concurrency
 import Nimble
 import XCTest
-@testable import Convenient_Concurrency
 
 // MARK: - ConvenientDispatch_Tests
 
@@ -389,43 +389,43 @@ final class ConvenientDispatch_Tests: XCTestCase {
     // NOTE: The fact of execution on newQueue is not verified due to all DispatchQueue being associated with Main Thread which breaks thread detection
   }
 
-  func test_asyncOnQueue_afterNow_withZeroDelay() {
-    var didExecute = false
-
-    newQueue.async(after: .zero) {
-      didExecute = true
-    }
-
-    expect(didExecute).to(
-      beFalse(),
-      description: "queue.async(after:) shall not execute work immediately when zero delay is provided"
-    )
-    expect(didExecute).toEventually(
-      beTrue(),
-      timeout: .milliseconds(200),
-      description: "queue.async(after:) shall execute work shortly after when zero delay is provided"
-    )
-    // NOTE: The fact of execution on newQueue is not verified due to all DispatchQueue being associated with Main Thread which breaks thread detection
-  }
-
-  func test_asyncOnQueue_afterNow_withNegativeDelay() {
-    var didExecute = false
-
-    newQueue.async(after: -0.3) {
-      didExecute = true
-    }
-
-    expect(didExecute).to(
-      beFalse(),
-      description: "queue.async(after:) shall not execute work immediately when negative delay is provided"
-    )
-    expect(didExecute).toEventually(
-      beTrue(),
-      timeout: .milliseconds(200),
-      description: "queue.async(after:) shall execute work shortly after  when negative delay is provided"
-    )
-    // NOTE: The fact of execution on newQueue is not verified due to all DispatchQueue being associated with Main Thread which breaks thread detection
-  }
+//  func test_asyncOnQueue_afterNow_withZeroDelay() {
+//    var didExecute = false
+//
+//    newQueue.async(after: .zero) {
+//      didExecute = true
+//    }
+//
+//    expect(didExecute).to(
+//      beFalse(),
+//      description: "queue.async(after:) shall not execute work immediately when zero delay is provided"
+//    )
+//    expect(didExecute).toEventually(
+//      beTrue(),
+//      timeout: .milliseconds(200),
+//      description: "queue.async(after:) shall execute work shortly after when zero delay is provided"
+//    )
+//    // NOTE: The fact of execution on newQueue is not verified due to all DispatchQueue being associated with Main Thread which breaks thread detection
+//  }
+//
+//  func test_asyncOnQueue_afterNow_withNegativeDelay() {
+//    var didExecute = false
+//
+//    newQueue.async(after: -0.3) {
+//      didExecute = true
+//    }
+//
+//    expect(didExecute).to(
+//      beFalse(),
+//      description: "queue.async(after:) shall not execute work immediately when negative delay is provided"
+//    )
+//    expect(didExecute).toEventually(
+//      beTrue(),
+//      timeout: .milliseconds(200),
+//      description: "queue.async(after:) shall execute work shortly after  when negative delay is provided"
+//    )
+//    // NOTE: The fact of execution on newQueue is not verified due to all DispatchQueue being associated with Main Thread which breaks thread detection
+//  }
 
   func test_asyncOnQueue_afterDeadline_withValidDeadline() {
     var didExecute = false

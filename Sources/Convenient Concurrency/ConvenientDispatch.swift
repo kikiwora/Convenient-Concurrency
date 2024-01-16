@@ -81,7 +81,14 @@ public extension DispatchQueue {
 
 public extension DispatchQueue {
   static func getCurrentQueueLabel() -> String {
-    DispatchQueue.getSpecific(key: DispatchSpecificKey<String>()) ?? .empty
+    guard let label = String(validatingUTF8: __dispatch_queue_get_label(nil)) else {
+      #if DEBUG
+      fatalError("It seems that __dispatch_queue_get_label method does not work for \(String(describing: self))")
+      #else
+      return .empty
+      #endif
+    }
+    return label
   }
 
   static func isCurrentExecution(on queue: DispatchQueue) -> Bool {
@@ -89,9 +96,14 @@ public extension DispatchQueue {
   }
 }
 
-// MARK: - Helpers
-
-private extension String {
-  static var empty: Self { "" }
+public extension [EmptyClosure] {
+  func fulfil() {
+    forEach { $0() }
+  }
 }
 
+// TODO: Move this to Emptyable
+
+private extension String {
+  static var empty: String { "" }
+}
